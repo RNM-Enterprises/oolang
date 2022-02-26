@@ -9,7 +9,7 @@ pub struct State {
 #[derive(PartialEq, Eq, Debug)]
 pub enum Error {
     StackUnderflow,
-    End,
+    End(Option<u8>),
 }
 
 impl State {
@@ -24,64 +24,64 @@ impl State {
 
     pub fn execute(&mut self) -> Result<(), Error> {
         if self.pc >= self.instructions.len() {
-            return Err(Error::End);
+            return Err(Error::End(self.stack_top()));
         }
 
         match self.instructions[self.pc] {
-            Instruction::PUSH => {
+            Instruction::Push => {
                 self.stack.push(1);
                 self.pc += 1;
             }
-            Instruction::POP => {
+            Instruction::Pop => {
                 self.stack.pop().ok_or(Error::StackUnderflow)?;
                 self.pc += 1;
             }
-            Instruction::INC => {
+            Instruction::Inc => {
                 let top: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
                 self.stack.push(top + 1);
                 self.pc += 1;
             }
-            Instruction::DEC => {
+            Instruction::Dec => {
                 let top: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
                 self.stack.push(top - 1);
                 self.pc += 1;
             }
-            Instruction::JNZ => {
-                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
-                let eq: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
-                if i != eq {
-                    self.pc = i as usize;
+            Instruction::Jnz => {
+                let instr: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                let val: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                if val != 0 {
+                    self.pc = instr as usize;
                 }
 
-                self.stack.push(eq);
+                self.stack.push(val);
             }
-            Instruction::JZ => {
-                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
-                let eq: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
-                if i == eq {
-                    self.pc = i as usize;
+            Instruction::Jz => {
+                let instr: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                let val: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                if val == 0 {
+                    self.pc = instr as usize;
                 }
 
-                self.stack.push(eq);
+                self.stack.push(val);
             }
-            Instruction::READ => todo!(),
-            Instruction::WRITE => todo!(),
-            Instruction::STORE => {
-                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+            Instruction::Read => todo!(),
+            Instruction::Write => todo!(),
+            Instruction::Store => {
+                let addr: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
                 let stored_val: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
 
-                self.memory[i as usize] = stored_val;
+                self.memory[addr as usize] = stored_val;
                 self.pc += 1;
             }
-            Instruction::LOAD => {
-                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
-                self.stack.push(self.memory[i as usize]);
+            Instruction::Load => {
+                let addr: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                self.stack.push(self.memory[addr as usize]);
                 self.pc += 1;
             }
-            Instruction::ADD => {
+            Instruction::Add => {
                 let a: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
                 let b: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
-                self.stack.push(a+b);
+                self.stack.push(a + b);
                 self.pc += 1;
             }
         };

@@ -10,16 +10,19 @@ pub fn parse(commands: &str) -> Option<Vec<Instruction>> {
     commands.graphemes(true).map(Instruction::from).collect()
 }
 
-pub fn execute(instructions: Vec<Instruction>) -> Result<u8, vm::Error> {
+pub fn execute(instructions: Vec<Instruction>) -> vm::Error {
     let mut vm: vm::State = vm::State::init(instructions);
     loop {
         if let Err(e) = vm.execute() {
-            break Err(e);
+            break e;
         }
     }
 }
 
 pub fn run(program: &str) -> Option<u8> {
     let instructions: Vec<Instruction> = parse(program)?;
-    execute(instructions).ok()
+    match execute(instructions) {
+        vm::Error::StackUnderflow => None,
+        vm::Error::End(x) => x,
+    }
 }
