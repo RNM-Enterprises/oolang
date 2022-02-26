@@ -1,27 +1,41 @@
 mod instruction;
 use std::env;
+use std::io::{stdin, BufRead};
 use std::path::Path;
 
+//remove comments from file
 fn clean_file(file: &str) -> String {
-    String::from(file)
+    file.lines()
+        .filter_map(|line: &str| line.split('#').next())
+        .collect::<Vec<&str>>()
+        .join("")
 }
 
+//get all input from stdin
 fn get_input() -> String {
-    String::new()
+    let mut buf = String::new();
+    let stdin = stdin();
+    for line in stdin.lock().lines().flatten() {
+        buf.push_str(&line);
+    }
+    buf
 }
 
 fn main() {
+    //get command line args and make sure the right number of them exist
     let cli_args: Vec<String> = env::args().collect();
     if cli_args.len() < 2 {
         println!("Please specify an OOLANG file");
         return;
     }
 
+    //check file exists
     let path = Path::new(&cli_args[1]);
     if !path.exists() {
         println!("File {} does not exist", path.display());
         return;
     }
+    //get filename and extension
     let filename = path
         .file_name()
         .and_then(|c| c.to_str())
@@ -32,14 +46,18 @@ fn main() {
         println!("Not a valid OOLANG file. OOLANG files should end in .oo ",);
         return;
     }
-
+    //read the file
     let file = std::fs::read_to_string(path);
     if file.is_err() {
         println!("Could not open file: {} ", path.display())
     }
     let file = file.unwrap();
+
+    //run the program
     println!("Running OOLANG file: {filename}...");
     if let Some(i) = oolang::run_cli(&clean_file(&file), &get_input()) {
         std::process::exit(i as i32)
+    } else {
+        std::process::exit(-1)
     }
 }
