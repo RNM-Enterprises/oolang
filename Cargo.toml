@@ -3,7 +3,11 @@ name = "OOLANG-interpreter"
 version = "0.1.0"
 edition = "2021"
 authors = ["Joey Harrison <Joeyh021@icloud.com>"]
-
+repository= "https://github.com/RNM-Enterprises/oolang"
+readme = "README.md"
+license = "MIT"
+rust-version = "1.58"
+description="An esoteric stack-based programming language, where all instructions are different variations of the character 'O'" 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
