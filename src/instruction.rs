@@ -16,7 +16,7 @@ pub enum Instruction {
 use Instruction::*;
 
 impl Instruction {
-    pub fn from(c: &str) -> Option<Self> {
+    pub fn from_glyph(c: &str) -> Option<Self> {
         match c {
             "O" => Some(Push),    // Latin Capital letter O
             "0" => Some(Pop),     // Digit Zero

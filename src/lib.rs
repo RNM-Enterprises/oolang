@@ -10,7 +10,7 @@ mod test;
 fn parse(commands: &str) -> Vec<Instruction> {
     commands
         .graphemes(true)
-        .filter_map(Instruction::from)
+        .filter_map(Instruction::from_glyph)
         .collect()
 }
 
