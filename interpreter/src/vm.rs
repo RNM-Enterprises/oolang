@@ -6,6 +6,7 @@ pub struct State {
     instructions: Vec<Instruction>,
 }
 
+#[derive(PartialEq, Eq, Debug)]
 pub enum Error {
     StackUnderflow,
     End,
