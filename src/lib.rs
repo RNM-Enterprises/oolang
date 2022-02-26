@@ -1,24 +1,31 @@
-use wasm_bindgen::prelude::*;
+mod instruction;
+mod vm;
+use instruction::Instruction;
+use unicode_segmentation::UnicodeSegmentation;
 
-#[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
+#[cfg(test)]
+mod test;
+
+fn parse(commands: &str) -> Vec<Instruction> {
+    commands
+        .graphemes(true)
+        .filter_map(Instruction::from)
+        .collect()
 }
 
-#[wasm_bindgen]
-pub fn big_computation() {
-    alert("Big computation in Rust");
+fn execute(instructions: Vec<Instruction>) -> vm::Error {
+    let mut vm: vm::State = vm::State::init(instructions);
+    loop {
+        if let Err(e) = vm.step() {
+            break e;
+        }
+    }
 }
 
-#[wasm_bindgen]
-pub fn welcome(name: &str) {
-	alert(&format!("Hello {}, from Rust!", name));
-}
-
-#[wasm_bindgen]
-pub fn fib(n: u32) -> u32 {
-	if n == 0 || n == 1 {
-		return n;
-	}
-	fib(n - 1) + fib(n - 2)
+pub fn run(program: &str) -> Option<u8> {
+    let instructions: Vec<Instruction> = parse(program);
+    match execute(instructions) {
+        vm::Error::StackUnderflow => None,
+        vm::Error::End(x) => x,
+    }
 }

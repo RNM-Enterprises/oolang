@@ -1,7 +1,1 @@
-node_modules
-*.local
-
-# Added by cargo
-
 /target
-Cargo.lock
