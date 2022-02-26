@@ -1,5 +1,8 @@
 # OOLANG
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/RNM-Enterprises/oolang/CI/main?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/RNM-Enterprises/oolang?style=for-the-badge)
+![Crates.io](https://img.shields.io/crates/d/OOLANG?style=for-the-badge)
+![Crates.io](https://img.shields.io/crates/v/OOLANG?style=for-the-badge)
 
 OOLANG is an esoteric stack-based programming language where all instructions/commands are differnet unicode O characters
 
