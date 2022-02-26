@@ -19,10 +19,6 @@ pub fn execute(instructions: Vec<Instruction>) -> vm::Error {
         if let Err(e) = vm.execute() {
             break e;
         }
-        dbg!(&vm.stack);
-        dbg!(&vm.instructions[*&vm.pc as usize]);
-        dbg!(&vm.memory[1]);
-        dbg!(&vm.memory[2]);
     }
 }
 
