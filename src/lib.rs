@@ -6,6 +6,7 @@ use unicode_segmentation::UnicodeSegmentation;
 
 mod test;
 
+//parse the unicode graphemes into instruction vec
 fn parse(commands: &str) -> Vec<Instruction> {
     commands
         .graphemes(true)
@@ -13,6 +14,7 @@ fn parse(commands: &str) -> Vec<Instruction> {
         .collect()
 }
 
+//execute, priniting to stdout
 fn execute_print(vm: &mut vm::State) -> Option<u8> {
     loop {
         match vm.step() {
@@ -23,7 +25,7 @@ fn execute_print(vm: &mut vm::State) -> Option<u8> {
         }
     }
 }
-
+//execute, saving output to a buffer
 fn execute_buffer(vm: &mut vm::State, output_buffer: &mut String) -> Option<u8> {
     loop {
         match vm.step() {
@@ -35,12 +37,14 @@ fn execute_buffer(vm: &mut vm::State, output_buffer: &mut String) -> Option<u8> 
     }
 }
 
+//run the program using execute_print, designed for cli use
 pub fn run_cli(program: &str, input: &str) -> Option<u8> {
     let instructions: Vec<Instruction> = parse(program);
     let mut vm = vm::State::init_with_input(instructions, input)?;
     execute_print(&mut vm)
 }
 
+//run the program, returning the output buffer when done
 pub fn run_buffered(program: &str, input: &str) -> (Option<u8>, String) {
     let instructions: Vec<Instruction> = parse(program);
     let mut output_buffer = String::new();
