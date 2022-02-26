@@ -88,6 +88,15 @@ export function welcome(name) {
     wasm.welcome(ptr0, len0);
 }
 
+/**
+* @param {number} n
+* @returns {number}
+*/
+export function fib(n) {
+    var ret = wasm.fib(n);
+    return ret >>> 0;
+}
+
 export function __wbg_alert_d7530c8a4220b241(arg0, arg1) {
     alert(getStringFromWasm0(arg0, arg1));
 };

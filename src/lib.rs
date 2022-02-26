@@ -14,3 +14,11 @@ pub fn big_computation() {
 pub fn welcome(name: &str) {
 	alert(&format!("Hello {}, from Rust!", name));
 }
+
+#[wasm_bindgen]
+pub fn fib(n: u32) -> u32 {
+	if n == 0 || n == 1 {
+		return n;
+	}
+	fib(n - 1) + fib(n - 2)
+}

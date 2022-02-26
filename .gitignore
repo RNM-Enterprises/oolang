@@ -1,5 +1,5 @@
 node_modules
-
+*.local
 
 # Added by cargo
 
