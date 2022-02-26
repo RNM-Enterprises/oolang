@@ -1,3 +1,4 @@
+#[derive(PartialEq, Eq, Debug, Copy, Clone)]
 pub enum Instruction {
     PUSH,  //Push a 1 onto the stack
     POP,   //Pop the top value from the stack, discarding it
