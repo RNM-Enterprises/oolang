@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 const wasm = import("../build/hackathon");
@@ -6,12 +6,18 @@ const wasm = import("../build/hackathon");
 wasm.then((m) => {
     const App = () => {
         const [name, setName] = useState("");
+		const [fibResult, setFibResult] = useState();
+
         const handleChange = (e) => {
             setName(e.target.value);
         };
         const handleClick = () => {
             m.welcome(name);
         };
+
+		const compute = () => {
+			setFibResult(m.fib(10));
+		}
 
         return (
             <>
@@ -22,6 +28,8 @@ wasm.then((m) => {
                 <div>
                     <input type="text" onChange={handleChange} />
                     <button onClick={handleClick}>Say hello!</button>
+					<button onClick={compute}>Compute</button>
+					<span>{ fibResult }</span>
                 </div>
             </>
         );
