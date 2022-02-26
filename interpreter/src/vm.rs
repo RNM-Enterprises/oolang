@@ -6,6 +6,10 @@ pub struct State {
     instructions: Vec<Instruction>,
 }
 
+pub enum Error {
+    StackUnderflow,
+}
+
 impl State {
     pub fn init(instructions: Vec<Instruction>) -> Self {
         State {
@@ -13,6 +17,24 @@ impl State {
             stack: Vec::new(),
             pc: 0,
             instructions,
+        }
+    }
+
+    pub fn execute(mut self, instruction: Instruction) -> Result<Self, Error> {
+        match instruction {
+            Instruction::PUSH => todo!(),
+            Instruction::POP => {
+                self.stack.pop().ok_or(Error::StackUnderflow)?;
+                Ok(self)
+            }
+            Instruction::INC => todo!(),
+            Instruction::DEC => todo!(),
+            Instruction::JNZ => todo!(),
+            Instruction::JZ => todo!(),
+            Instruction::READ => todo!(),
+            Instruction::WRITE => todo!(),
+            Instruction::STORE => todo!(),
+            Instruction::LOAD => todo!(),
         }
     }
 }

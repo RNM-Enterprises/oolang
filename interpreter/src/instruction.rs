@@ -1,4 +1,3 @@
-use crate::vm::State;
 pub enum Instruction {
     PUSH,  //Push a 1 onto the stack
     POP,   //Pop the top value from the stack, discarding it
@@ -10,14 +9,4 @@ pub enum Instruction {
     WRITE, //Pop the top stack value, writing to stdout
     STORE, //Store the 2nd top stack value at the address specified by the top stack value
     LOAD, //Replace the top stack value with the value at the address specified by it
-}
-
-pub enum Error {
-    StackUnderflowError,
-}
-
-impl Instruction {
-    pub fn execute(self, state: State) -> Result<State, Error> {
-        Ok(state)
-    }
 }
