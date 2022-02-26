@@ -1,16 +1,15 @@
 use crate::instruction::Instruction;
-use std::iter::{empty, Empty};
 
 //represents the state of the stack machine
 //generic over an iterator for input
 
 #[derive(Debug)]
-pub struct State<I: Iterator<Item = u8>> {
+pub struct State {
     memory: [u8; 256],
     stack: Vec<u8>,
     pc: usize,
     instructions: Vec<Instruction>,
-    input: I,
+    input: Vec<u8>,
 }
 
 //VM Interrupts
@@ -21,26 +20,35 @@ pub enum Interrupt {
     Output(char),
 }
 
-impl State<Empty<u8>> {
+impl State {
     pub fn init(instructions: Vec<Instruction>) -> Self {
         State {
             memory: [0; 256],
             stack: Vec::new(),
             pc: 0,
             instructions,
-            input: empty(),
+            input: Vec::new(),
         }
     }
-}
 
-impl<I: Iterator<Item = u8>> State<I> {
-    pub fn init_with_input(instructions: Vec<Instruction>, input: I) -> Self {
-        State {
-            memory: [0; 256],
-            stack: Vec::new(),
-            pc: 0,
-            instructions,
-            input,
+    pub fn init_with_input(instructions: Vec<Instruction>, input: &str) -> Option<Self> {
+        //check all the chars can convert to u8s
+        if input
+            .chars()
+            .map(|c| c.try_into())
+            .collect::<Result<Vec<u8>, _>>()
+            .is_err()
+        {
+            None
+        } else {
+            // if we're all good then create the struct with panicking conversion
+            Some(State {
+                memory: [0; 256],
+                stack: Vec::new(),
+                pc: 0,
+                instructions,
+                input: input.chars().rev().map(|c| c as u8).collect(),
+            })
         }
     }
 
@@ -91,7 +99,7 @@ impl<I: Iterator<Item = u8>> State<I> {
                 self.stack.push(val);
             }
             Instruction::Read => {
-                self.stack.push(self.input.next().unwrap_or(0));
+                self.stack.push(self.input.pop().unwrap_or(0));
                 self.pc += 1;
             }
 

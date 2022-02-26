@@ -1,4 +1,4 @@
-use crate::execute;
+use crate::execute_print;
 use crate::instruction::Instruction;
 use crate::instruction::Instruction::*;
 
@@ -10,7 +10,7 @@ fn test_empty_instructions() {
     let instructions: Vec<Instruction> = Vec::new();
 
     let mut vm = State::init(instructions);
-    let result = execute(&mut vm);
+    let result = execute_print(&mut vm);
     assert_eq!(result, None)
 }
 
@@ -20,7 +20,7 @@ fn test_stack_underflow() {
     let instructions: Vec<Instruction> = vec![Pop];
 
     let mut vm = State::init(instructions);
-    let result = execute(&mut vm);
+    let result = execute_print(&mut vm);
     assert_eq!(result, None)
 }
 
@@ -34,7 +34,7 @@ fn test_addition() {
     instructions.push(Add);
 
     let mut vm = State::init(instructions);
-    let result = execute(&mut vm);
+    let result = execute_print(&mut vm);
     assert_eq!(result, Some(15))
 }
 
@@ -72,7 +72,7 @@ fn test_multiplication() {
     instructions.push(Load);
 
     let mut vm = State::init(instructions);
-    let result = execute(&mut vm);
+    let result = execute_print(&mut vm);
     assert_eq!(result, Some(54))
 }
 

@@ -6,6 +6,10 @@ fn clean_file(file: &str) -> String {
     String::from(file)
 }
 
+fn get_input() -> String {
+    String::new()
+}
+
 fn main() {
     let cli_args: Vec<String> = env::args().collect();
     if cli_args.len() < 2 {
@@ -35,7 +39,7 @@ fn main() {
     }
     let file = file.unwrap();
     println!("Running OOLANG file: {filename}...");
-    if let Some(i) = oolang::run(&clean_file(&file)) {
+    if let Some(i) = oolang::run_cli(&clean_file(&file), &get_input()) {
         std::process::exit(i as i32)
     }
 }
