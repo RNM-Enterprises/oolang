@@ -21,16 +21,12 @@ pub enum Interrupt {
 }
 
 impl State {
+    //create a new vm with empty input
+    //only really used in tests
     pub fn init(instructions: Vec<Instruction>) -> Self {
-        State {
-            memory: [0; 256],
-            stack: Vec::new(),
-            pc: 0,
-            instructions,
-            input: Vec::new(),
-        }
+        Self::init_with_input(instructions, "").unwrap()
     }
-
+    //create a new vm with the given input to the program
     pub fn init_with_input(instructions: Vec<Instruction>, input: &str) -> Option<Self> {
         //check all the chars can convert to u8s
         if input
@@ -52,7 +48,9 @@ impl State {
         }
     }
 
+    //execute a single instruction
     pub fn step(&mut self) -> Result<(), Interrupt> {
+        //return end of program if pc is past end of instructions
         if self.pc >= self.instructions.len() {
             return Err(Interrupt::End(self.stack_top()));
         }
@@ -68,12 +66,15 @@ impl State {
             }
             Instruction::Inc => {
                 let top: u8 = self.stack.pop().ok_or(Interrupt::StackUnderflow)?;
-                self.stack.push(top + 1);
+                self.stack
+                    .push(if top == u8::MAX { u8::MIN } else { top + 1 });
                 self.pc += 1;
             }
             Instruction::Dec => {
                 let top: u8 = self.stack.pop().ok_or(Interrupt::StackUnderflow)?;
-                self.stack.push(top - 1);
+                self.stack
+                    .push(if top == u8::MIN { u8::MAX } else { top + 1 });
+
                 self.pc += 1;
             }
             Instruction::Jnz => {
@@ -129,7 +130,7 @@ impl State {
         };
         Ok(())
     }
-
+    //peek the top of the stack
     pub fn stack_top(&self) -> Option<u8> {
         self.stack.last().map(|i| i.to_owned())
     }
