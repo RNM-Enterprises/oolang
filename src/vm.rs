@@ -1,3 +1,5 @@
+use std::num::Wrapping;
+
 use crate::instruction::Instruction;
 
 //represents the state of the stack machine
@@ -66,14 +68,12 @@ impl State {
             }
             Instruction::Inc => {
                 let top: u8 = self.stack.pop().ok_or(Interrupt::StackUnderflow)?;
-                self.stack
-                    .push(if top == u8::MAX { u8::MIN } else { top + 1 });
+                self.stack.push((Wrapping(top) + Wrapping(1_u8)).0);
                 self.pc += 1;
             }
             Instruction::Dec => {
                 let top: u8 = self.stack.pop().ok_or(Interrupt::StackUnderflow)?;
-                self.stack
-                    .push(if top == u8::MIN { u8::MAX } else { top + 1 });
+                self.stack.push((Wrapping(top) - Wrapping(1_u8)).0);
 
                 self.pc += 1;
             }
@@ -124,7 +124,7 @@ impl State {
             Instruction::Add => {
                 let a: u8 = self.stack.pop().ok_or(Interrupt::StackUnderflow)?;
                 let b: u8 = self.stack.pop().ok_or(Interrupt::StackUnderflow)?;
-                self.stack.push(a + b);
+                self.stack.push((Wrapping(a) + Wrapping(b)).0);
                 self.pc += 1;
             }
         };
