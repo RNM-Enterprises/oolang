@@ -20,12 +20,11 @@ impl State {
         }
     }
 
-    pub fn execute(mut self, instruction: Instruction) -> Result<Self, Error> {
+    pub fn execute(&mut self, instruction: Instruction) -> Result<(), Error> {
         match instruction {
             Instruction::PUSH => todo!(),
             Instruction::POP => {
                 self.stack.pop().ok_or(Error::StackUnderflow)?;
-                Ok(self)
             }
             Instruction::INC => todo!(),
             Instruction::DEC => todo!(),
@@ -35,6 +34,7 @@ impl State {
             Instruction::WRITE => todo!(),
             Instruction::STORE => todo!(),
             Instruction::LOAD => todo!(),
-        }
+        };
+        Ok(())
     }
 }
