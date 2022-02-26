@@ -31,7 +31,7 @@ impl State {
         //check all the chars can convert to u8s
         if input
             .chars()
-            .map(|c| c.try_into())
+            .map(|c| u8::try_from(u32::from(c)))
             .collect::<Result<Vec<u8>, _>>()
             .is_err()
         {
