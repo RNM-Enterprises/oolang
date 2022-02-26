@@ -71,10 +71,12 @@ impl State {
                 let storedVal: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
                 
                 self.memory[i] = storedVal;
+                self.pc += 1;
             },
             Instruction::LOAD => {
                 let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
                 self.stack.push(self.memory[i]);
+                self.pc += 1;
             },
         };
         Ok(())
