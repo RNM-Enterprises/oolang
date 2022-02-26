@@ -1,0 +1,15 @@
+[package]
+name = "OOLANG-interpreter"
+version = "0.1.0"
+edition = "2021"
+authors = ["Joey Harrison <Joeyh021@icloud.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "oolang"
+path = "src/lib.rs"
+
+[[bin]]
+name = "oorun"
+path = "src/main.rs"
