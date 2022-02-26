@@ -3,7 +3,7 @@
 version = 3
 
 [[package]]
-name = "OOLANG-interpreter"
+name = "OOLANG"
 version = "0.1.0"
 dependencies = [
  "unicode-segmentation",

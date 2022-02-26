@@ -1,5 +1,5 @@
 [package]
-name = "OOLANG-interpreter"
+name = "OOLANG"
 version = "0.1.0"
 edition = "2021"
 authors = ["Joey Harrison <Joeyh021@icloud.com>"]
