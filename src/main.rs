@@ -3,7 +3,7 @@ use std::env;
 use std::path::Path;
 
 fn clean_file(file: &str) -> String {
-    String::new()
+    String::from(file)
 }
 
 fn main() {
