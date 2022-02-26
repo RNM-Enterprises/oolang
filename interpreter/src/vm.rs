@@ -23,7 +23,7 @@ impl State {
         }
     }
 
-    pub fn execute(&mut self) -> Result<(), Error> {
+    pub fn step(&mut self) -> Result<(), Error> {
         if self.pc >= self.instructions.len() {
             return Err(Error::End(self.stack_top()));
         }
