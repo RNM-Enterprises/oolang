@@ -8,6 +8,7 @@ pub struct State {
 
 pub enum Error {
     StackUnderflow,
+    End,
 }
 
 impl State {
@@ -21,20 +22,60 @@ impl State {
     }
 
     pub fn execute(&mut self) -> Result<(), Error> {
+        if self.pc >= self.instructions.len() {
+            return Err(Error::End)
+        }
+
         match self.instructions[self.pc] {
-            Instruction::PUSH => todo!(),
+            Instruction::PUSH => {
+                self.stack.push(1);
+                self.pc += 1;
+            }
             Instruction::POP => {
                 self.stack.pop().ok_or(Error::StackUnderflow)?;
                 self.pc += 1;
             }
-            Instruction::INC => todo!(),
-            Instruction::DEC => todo!(),
-            Instruction::JNZ => todo!(),
-            Instruction::JZ => todo!(),
+            Instruction::INC => {
+                let top: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                self.stack.push(top+1);
+                self.pc += 1;
+
+            }
+            Instruction::DEC => {
+                let top: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                self.stack.push(top-1);
+                self.pc += 1;
+            },
+            Instruction::JNZ => {
+                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                let eq: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                if i != eq {
+                    self.pc = i;
+                }
+
+                self.stack.push(eq);
+            },
+            Instruction::JZ => {
+                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                let eq: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                if i == eq {
+                    self.pc = i;
+                }
+
+                self.stack.push(eq);
+            },
             Instruction::READ => todo!(),
             Instruction::WRITE => todo!(),
-            Instruction::STORE => todo!(),
-            Instruction::LOAD => todo!(),
+            Instruction::STORE => {
+                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                let storedVal: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                
+                self.memory[i] = storedVal;
+            },
+            Instruction::LOAD => {
+                let i: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                self.stack.push(self.memory[i]);
+            },
         };
         Ok(())
     }
