@@ -69,3 +69,21 @@ fn test_multiplication() {
     let result = crate::execute(instructions);
     assert_eq!(result, Error::End(Some(54)))
 }
+
+use crate::parse;
+#[test]
+fn parse_test() {
+    let instructions = parse("O0ǾᏫ𐍉Ꝍ⒪ₒ⭕◎◯");
+    assert_eq!(
+        instructions,
+        vec![Push, Pop, Inc, Dec, Jnz, Jz, Read, Write, Add, Load, Store]
+    )
+}
+#[test]
+fn parse_test_with_spaces() {
+    let instructions = parse("O0   ǾᏫ   𐍉Ꝍ   ⒪  ₒ⭕\n◎◯");
+    assert_eq!(
+        instructions,
+        vec![Push, Pop, Inc, Dec, Jnz, Jz, Read, Write, Add, Load, Store]
+    )
+}

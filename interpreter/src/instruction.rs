@@ -28,7 +28,7 @@ impl Instruction {
             "ₒ" => Some(Write), //Latin Subscript Small Letter O
             "⭕" => Some(Add),   //Hollow Red Circle
             "◎" => Some(Load),  // Bullseye
-            "⎈" => Some(Store), // Helm Symbol
+            "◯" => Some(Store), // Large Circle
             _ => None,
         }
     }
