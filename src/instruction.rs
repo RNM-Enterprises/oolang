@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 #[derive(PartialEq, Eq, Debug, Copy, Clone)]
 pub enum Instruction {
     Push,  //Push a 1 onto the stack
