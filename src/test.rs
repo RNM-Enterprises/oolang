@@ -1,3 +1,4 @@
+#![cfg(test)]
 use crate::execute_print;
 use crate::instruction::Instruction;
 use crate::instruction::Instruction::*;

@@ -4,7 +4,6 @@ mod vm;
 use instruction::Instruction;
 use unicode_segmentation::UnicodeSegmentation;
 
-#[cfg(test)]
 mod test;
 
 fn parse(commands: &str) -> Vec<Instruction> {
