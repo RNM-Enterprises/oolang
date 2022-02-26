@@ -37,7 +37,7 @@ fn test_addition() {
 #[test]
 fn test_multiplication() {
     // tests that program for 6 * 9 returns 54
-    let mut instructions: Vec<Instruction> = vec![Push];
+    let mut instructions: Vec<Instruction> = Vec::new();
     instructions.push(Push);
     instructions.append(&mut vec![Inc; 5]);
     instructions.push(Dec);
@@ -45,6 +45,8 @@ fn test_multiplication() {
     instructions.append(&mut vec![Inc; 8]);
     instructions.push(Push);
     instructions.push(Store);
+    instructions.push(Push);
+    instructions.push(Load);
     instructions.push(Push);
     instructions.push(Inc);
     instructions.push(Store);
@@ -60,8 +62,8 @@ fn test_multiplication() {
     instructions.push(Store);
     instructions.push(Dec);
     instructions.push(Push);
-    instructions.append(&mut vec![Inc; 16]);
-    instructions.push(Jz);
+    instructions.append(&mut vec![Inc; 22]);
+    instructions.push(Jnz);
     instructions.push(Push);
     instructions.push(Inc);
     instructions.push(Load);

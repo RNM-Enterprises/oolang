@@ -1,9 +1,10 @@
 use crate::instruction::Instruction;
+#[derive(Debug)]
 pub struct State {
-    memory: [u8; 256],
-    stack: Vec<u8>,
-    pc: usize,
-    instructions: Vec<Instruction>,
+    pub memory: [u8; 256],
+    pub stack: Vec<u8>,
+    pub pc: usize,
+    pub instructions: Vec<Instruction>,
 }
 
 #[derive(PartialEq, Eq, Debug)]
@@ -52,6 +53,9 @@ impl State {
                 if val != 0 {
                     self.pc = instr as usize;
                 }
+                else {
+                    self.pc += 1;
+                }
 
                 self.stack.push(val);
             }
@@ -60,6 +64,9 @@ impl State {
                 let val: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
                 if val == 0 {
                     self.pc = instr as usize;
+                }
+                else {
+                    self.pc += 1;
                 }
 
                 self.stack.push(val);
