@@ -10,3 +10,11 @@ pub enum Instruction {
     STORE, //Store the 2nd top stack value at the address specified by the top stack value
     LOAD, //Replace the top stack value with the value at the address specified by it
 }
+
+impl Instruction {
+    pub fn from(c: &str) -> Option<Self> {
+        match c {
+            _ => None,
+        }
+    }
+}

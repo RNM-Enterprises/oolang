@@ -38,4 +38,8 @@ impl State {
         };
         Ok(())
     }
+
+    pub fn stack_top(&self) -> Option<u8> {
+        self.stack.last().map(|i| i.to_owned())
+    }
 }
