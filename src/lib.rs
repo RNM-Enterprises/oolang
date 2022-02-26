@@ -14,7 +14,7 @@ fn parse(commands: &str) -> Vec<Instruction> {
 }
 
 fn execute(instructions: Vec<Instruction>) -> vm::Error {
-    let mut vm: vm::State = vm::State::init(instructions);
+    let mut vm: vm::State<_> = vm::State::init(instructions);
     loop {
         if let Err(e) = vm.step() {
             break e;
