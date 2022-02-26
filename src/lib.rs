@@ -1,5 +1,6 @@
 mod instruction;
 mod vm;
+
 use instruction::Instruction;
 use unicode_segmentation::UnicodeSegmentation;
 
@@ -13,19 +14,31 @@ fn parse(commands: &str) -> Vec<Instruction> {
         .collect()
 }
 
-fn execute(instructions: Vec<Instruction>) -> vm::Error {
-    let mut vm: vm::State<_> = vm::State::init(instructions);
+fn execute<I>(vm: &mut vm::State<I>) -> Option<u8>
+where
+    I: Iterator<Item = u8>,
+{
     loop {
-        if let Err(e) = vm.step() {
-            break e;
+        match vm.step() {
+            Ok(()) => (),
+            Err(vm::Interrupt::End(top)) => break top,
+            Err(vm::Interrupt::Output(c)) => print!("{c}"),
+            Err(vm::Interrupt::StackUnderflow) => break None,
         }
     }
 }
 
 pub fn run(program: &str) -> Option<u8> {
     let instructions: Vec<Instruction> = parse(program);
-    match execute(instructions) {
-        vm::Error::StackUnderflow => None,
-        vm::Error::End(x) => x,
-    }
+    let mut vm = vm::State::init(instructions);
+    execute(&mut vm)
+}
+
+pub fn run_with_input<I: Iterator<Item = u8>>(program: &str, input: I) -> Option<u8>
+where
+    I: Iterator<Item = u8>,
+{
+    let instructions: Vec<Instruction> = parse(program);
+    let mut vm = vm::State::init_with_input(instructions, input);
+    execute(&mut vm)
 }
