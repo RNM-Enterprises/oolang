@@ -20,11 +20,12 @@ impl State {
         }
     }
 
-    pub fn execute(&mut self, instruction: Instruction) -> Result<(), Error> {
-        match instruction {
+    pub fn execute(&mut self) -> Result<(), Error> {
+        match self.instructions[self.pc] {
             Instruction::PUSH => todo!(),
             Instruction::POP => {
                 self.stack.pop().ok_or(Error::StackUnderflow)?;
+                self.pc += 1;
             }
             Instruction::INC => todo!(),
             Instruction::DEC => todo!(),
