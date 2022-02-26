@@ -6,8 +6,11 @@ use unicode_segmentation::UnicodeSegmentation;
 #[cfg(test)]
 mod test;
 
-pub fn parse(commands: &str) -> Option<Vec<Instruction>> {
-    commands.graphemes(true).map(Instruction::from).collect()
+pub fn parse(commands: &str) -> Vec<Instruction> {
+    commands
+        .graphemes(true)
+        .filter_map(Instruction::from)
+        .collect()
 }
 
 pub fn execute(instructions: Vec<Instruction>) -> vm::Error {
@@ -24,7 +27,7 @@ pub fn execute(instructions: Vec<Instruction>) -> vm::Error {
 }
 
 pub fn run(program: &str) -> Option<u8> {
-    let instructions: Vec<Instruction> = parse(program)?;
+    let instructions: Vec<Instruction> = parse(program);
     match execute(instructions) {
         vm::Error::StackUnderflow => None,
         vm::Error::End(x) => x,
