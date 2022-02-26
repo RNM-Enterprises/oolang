@@ -78,6 +78,12 @@ impl State {
                 self.stack.push(self.memory[i as usize]);
                 self.pc += 1;
             }
+            Instruction::ADD => {
+                let a: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                let b: u8 = self.stack.pop().ok_or(Error::StackUnderflow)?;
+                self.stack.push(a+b);
+                self.pc += 1;
+            }
         };
         Ok(())
     }
