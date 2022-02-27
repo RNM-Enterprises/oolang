@@ -1,0 +1,18 @@
+O
+O 
+O ◯    # store in memory 1
+OǾ◯    # store in memory 2
+
+OǾǾǾǾǾ # push 6 (calculate 6th fibonacci number) 
+
+O ◎    # load in memory 1
+OǾ◎    # load in memory 2
+⭕     # add
+OǾ◎|O◯ # mov memory 2 to memory 1
+OǾ◯    # store in memory 2
+
+Ꮻ
+OǾǾǾǾǾǾǾǾǾǾǾǾ
+𐍉      # jump to char 14 if not equal to 0
+
+OǾ◎    # load in memory 2

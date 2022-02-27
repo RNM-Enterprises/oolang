@@ -1,0 +1,16 @@
+O ǾǾǾǾǾ    # push 6 to stack
+Ꮻ
+O ǾǾǾǾǾǾǾǾ # push 9 to stack
+O ◯        # store 9 in memory 1
+O ◎        # load 9 back into stack
+O Ǿ ◯      # store 9 in memory 2
+
+O ◎    # load in memory 1
+O Ǿ ◎  # load in memory 2
+⭕
+O Ǿ ◯  # store result in memory 2
+Ꮻ      # decrease counter
+O ǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾ # push 23
+𐍉
+
+O Ǿ ◎ # load answer back in from memory 2
