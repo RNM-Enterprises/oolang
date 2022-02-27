@@ -5,12 +5,16 @@ use std::path::Path;
 
 //get all input from stdin
 fn get_input() -> String {
-    let mut buf = String::new();
-    let stdin = stdin();
-    for line in stdin.lock().lines().flatten() {
-        buf.push_str(&line);
-    }
-    buf
+    // let mut buf = String::new();
+    // let stdin = stdin();
+    // for line in stdin.lock().lines().flatten() {
+    //     buf.push_str(&line);
+    // }
+    // buf
+
+    //stdin bugged
+    //just return nothing for now
+    String::new()
 }
 
 fn main() {
