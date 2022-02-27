@@ -56,8 +56,8 @@ fn main() {
     //run the program
     println!("Running OOLANG file: {filename}...");
     if let Some(i) = oolang::run_cli(&clean_file(&file), &get_input()) {
-        std::process::exit(i as i32)
+        println!("Result: {}", i)
     } else {
-        std::process::exit(-1)
+        println!("Your program has no output. Perhaps there was an error?")
     }
 }
