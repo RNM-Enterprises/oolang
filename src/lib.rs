@@ -6,9 +6,17 @@ use unicode_segmentation::UnicodeSegmentation;
 
 mod test;
 
+//remove comments from input string
+fn clean_file(file: &str) -> String {
+    file.lines()
+        .filter_map(|line: &str| line.split('#').next())
+        .collect::<Vec<&str>>()
+        .join("")
+}
+
 //parse the unicode graphemes into instruction vec
 fn parse(commands: &str) -> Vec<Instruction> {
-    commands
+    clean_file(commands)
         .graphemes(true)
         .filter_map(Instruction::from_glyph)
         .collect()

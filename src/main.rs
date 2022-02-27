@@ -3,14 +3,6 @@ use std::env;
 use std::io::{stdin, BufRead};
 use std::path::Path;
 
-//remove comments from file
-fn clean_file(file: &str) -> String {
-    file.lines()
-        .filter_map(|line: &str| line.split('#').next())
-        .collect::<Vec<&str>>()
-        .join("")
-}
-
 //get all input from stdin
 fn get_input() -> String {
     let mut buf = String::new();
@@ -55,7 +47,7 @@ fn main() {
 
     //run the program
     println!("Running OOLANG file: {filename}...");
-    if let Some(i) = oolang::run_cli(&clean_file(&file), &get_input()) {
+    if let Some(i) = oolang::run_cli(&file, &get_input()) {
         println!("Result: {}", i)
     } else {
         println!("Your program has no output. Perhaps there was an error?")
