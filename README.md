@@ -10,7 +10,7 @@ OOLANG is an esoteric stack-based programming language where all instructions/co
 
 We have a custom Web IDE at <https://oolang.tech>, for experimenting in the browser.
 
-You can also install OOLANG on your system with Cargo:
+`oorun`, a command line runner, is available on [crates.io](https://crates.io/crates/OOLANG), and can be installed with Cargo:
 
 ```rust
 cargo install oolang
@@ -18,7 +18,7 @@ cargo install oolang
 
 OOLANG files end in `.oo`, and consist of a number of commands specified each by a single unicode glyph. Any other character is ignored. Comments are supported using the `#` character, which comments out up to the end of the line.
 
-`oorun file.oo` will execute your OOLANG program, reading from `stdin` and outputting to `stdout`.
+`oorun file.oo` will execute your OOLANG program. `stdin` functionality is currently broken as of the latest release, but output will be written to `stdout`.
 
 ## Language Specification
 
