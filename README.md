@@ -38,7 +38,7 @@ The virtual machine consists of a stack of bytes, and 256 bytes of addressable m
 | `◎`     | Bullseye                                     | `LOAD`       | Pop from the stack, and push the value at the memory address specified                      |
 | `◯`     | Large Circle                                 | `STORE`      | Pop the top two values from the stack, storing the 2nd at the address specified by the 1st  |
 | `⒪`     | Parenthesized Latin Small Letter O           | `READ`       | Read the next byte from stdin, pushing it to the top of the stack, or `0` if stdin is empty |
-| `ₒ`     | Latin Subscript Small Letter O               | `WRITE`      | Pop from the stack and write the value to stdin as an ascii character                       |
+| `ₒ`     | Latin Subscript Small Letter O               | `WRITE`      | Pop from the stack and write the value to stdout as an ascii character                       |
 
 ## Architecture
 
