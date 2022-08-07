@@ -1,20 +1,18 @@
 mod instruction;
 use std::env;
-use std::io::{stdin, BufRead};
+use std::io;
+use std::io::BufRead;
 use std::path::Path;
 
 //get all input from stdin
-fn get_input() -> String {
-    // let mut buf = String::new();
-    // let stdin = stdin();
-    // for line in stdin.lock().lines().flatten() {
-    //     buf.push_str(&line);
-    // }
-    // buf
-
-    //stdin bugged
-    //just return nothing for now
-    String::new()
+fn get_input() -> Result<String, io::Error> {
+    Ok(if atty::is(atty::Stream::Stdin) {
+        String::new()
+    } else {
+        let mut input = String::new();
+        while io::stdin().lock().read_line(&mut input)? != 0 {}
+        input
+    })
 }
 
 fn main() {
@@ -31,6 +29,7 @@ fn main() {
         println!("File {} does not exist", path.display());
         return;
     }
+
     //get filename and extension
     let filename = path
         .file_name()
@@ -38,20 +37,32 @@ fn main() {
         .expect("Could not read file name");
 
     let fileext = path.extension().expect("Could not read file extension");
+
     if fileext != "oo" {
         println!("Not a valid OOLANG file. OOLANG files should end in .oo ",);
         return;
     }
+
     //read the file
     let file = std::fs::read_to_string(path);
     if file.is_err() {
-        println!("Could not open file: {} ", path.display())
+        println!("Could not open file: {} ", path.display());
+        return;
     }
     let file = file.unwrap();
 
     //run the program
     println!("Running OOLANG file: {filename}...");
-    if let Some(i) = oolang::run_cli(&file, &get_input()) {
+    let input = get_input();
+
+    if input.is_err() {
+        println!("Could not read from stdin: {}", input.unwrap_err());
+        return;
+    }
+
+    println!("{:?}", input);
+
+    if let Some(i) = oolang::run_cli(&file, &input.unwrap()) {
         println!("Result: {}", i)
     } else {
         println!("Your program has no output. Perhaps there was an error?")
