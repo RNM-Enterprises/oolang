@@ -1,8 +1,33 @@
 mod instruction;
-use std::env;
-use std::io;
-use std::io::BufRead;
-use std::path::Path;
+use clap::Parser;
+use std::io::{self, BufRead};
+
+fn main() {
+    let cli = Cli::parse();
+
+    //read the file
+    let file = std::fs::read_to_string(&cli.file);
+    if file.is_err() {
+        println!("Could not open file: {} ", &cli.file);
+        return;
+    }
+
+    //run the program
+    println!("Running OOLANG file: {}...", &cli.file);
+    let input = get_input();
+
+    if input.is_err() {
+        println!("Could not read from stdin: {}", input.unwrap_err());
+        return;
+    }
+
+    if let Some(i) = oolang::run(&cli.file, input.unwrap().as_bytes()) {
+        println!("Top of stack: {}", i)
+    } else {
+        println!("Stack empty on program exit.")
+    }
+}
+
 //get all input from stdin
 fn get_input() -> Result<String, io::Error> {
     Ok(if atty::is(atty::Stream::Stdin) {
@@ -14,54 +39,19 @@ fn get_input() -> Result<String, io::Error> {
     })
 }
 
-fn main() {
-    //get command line args and make sure the right number of them exist
-    let cli_args: Vec<String> = env::args().collect();
-    if cli_args.len() < 2 {
-        println!("Please specify an OOLANG file");
-        return;
-    }
+#[derive(Parser)]
+#[clap(author, version, about, long_about = None)]
+struct Cli {
+    /// A CHIP-8 ROM to load into the interpreter
+    #[clap(validator = file_valid)]
+    file: String,
+}
 
-    //check file exists
-    let path = Path::new(&cli_args[1]);
-    if !path.exists() {
-        println!("File {} does not exist", path.display());
-        return;
-    }
-
-    //get filename and extension
-    let filename = path
-        .file_name()
-        .and_then(|c| c.to_str())
-        .expect("Could not read file name");
-
-    let fileext = path.extension().expect("Could not read file extension");
-
-    if fileext != "oo" {
-        println!("Not a valid OOLANG file. OOLANG files should end in .oo ",);
-        return;
-    }
-
-    //read the file
-    let file = std::fs::read_to_string(path);
-    if file.is_err() {
-        println!("Could not open file: {} ", path.display());
-        return;
-    }
-    let file = file.unwrap();
-
-    //run the program
-    println!("Running OOLANG file: {filename}...");
-    let input = get_input();
-
-    if input.is_err() {
-        println!("Could not read from stdin: {}", input.unwrap_err());
-        return;
-    }
-
-    if let Some(i) = oolang::run_cli(&file, &input.unwrap()) {
-        println!("Top of stack: {}", i)
+fn file_valid(f: &str) -> Result<(), &'static str> {
+    let p = std::path::Path::new(f);
+    if !p.is_file() {
+        Err("File does not exist.")
     } else {
-        println!("Stack empty on program exit.")
+        Ok(())
     }
 }
