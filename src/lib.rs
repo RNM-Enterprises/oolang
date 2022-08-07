@@ -6,10 +6,8 @@ mod vm;
 use instruction::Instruction;
 use unicode_segmentation::UnicodeSegmentation;
 
-mod test;
-
 /// Run the program with the input given, buffering all output data.
-/// Assumes `program` is a valid OOLANG program.
+/// All non-OOLANG characters in the input are ignored, along with any characters on a line after a '#' (indicating a comment).
 /// The output buffer is then returned, along with the return value from the top of the stack.
 /// If there is an error during execution, then the buffer is returned from execution up to that point, and the return value is None.
 pub fn run_buffered(program: &str, input: &[u8]) -> (Option<u8>, String) {
