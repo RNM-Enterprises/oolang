@@ -3,7 +3,6 @@ use std::env;
 use std::io;
 use std::io::BufRead;
 use std::path::Path;
-
 //get all input from stdin
 fn get_input() -> Result<String, io::Error> {
     Ok(if atty::is(atty::Stream::Stdin) {
@@ -60,11 +59,9 @@ fn main() {
         return;
     }
 
-    println!("{:?}", input);
-
     if let Some(i) = oolang::run_cli(&file, &input.unwrap()) {
-        println!("Result: {}", i)
+        println!("Top of stack: {}", i)
     } else {
-        println!("Your program has no output. Perhaps there was an error?")
+        println!("Stack empty on program exit.")
     }
 }

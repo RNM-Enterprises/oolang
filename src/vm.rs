@@ -25,6 +25,7 @@ pub enum Interrupt {
 impl State {
     //create a new vm with empty input
     //only really used in tests
+    #[allow(unused)]
     pub fn init(instructions: Vec<Instruction>) -> Self {
         Self::init_with_input(instructions, "").unwrap()
     }
