@@ -1,25 +1,25 @@
 # OOLANG
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/RNM-Enterprises/oolang/CI/main?style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/RNM-Enterprises/oolang?style=for-the-badge)
-![Crates.io](https://img.shields.io/crates/d/OOLANG?style=for-the-badge)
-![Crates.io](https://img.shields.io/crates/v/OOLANG?style=for-the-badge)
-![Docs.rs](https://img.shields.io/docsrs/OOLANG/latest?style=for-the-badge)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/RNM-Enterprises/oolang/CI/main?style=for-the-badge)([https://github.com/](https://github.com/RNM-Enterprises/oolang/actions))
+![GitHub](https://img.shields.io/github/license/RNM-Enterprises/oolang?style=for-the-badge)(./LICENSE)
+![Crates.io](https://img.shields.io/crates/d/OOLANG?style=for-the-badge)(https://crates.io/crates/OOLANG)
+![Crates.io](https://img.shields.io/crates/v/OOLANG?style=for-the-badge)(https://crates.io/crates/OOLANG)
+![Docs.rs](https://img.shields.io/docsrs/OOLANG/latest?style=for-the-badge)(https://docs.rs/OOLANG/latest/oolang/)
 
 OOLANG is an esoteric stack-based programming language where all instructions/commands are differnet unicode O characters
 
 ## Usage
 
-We have a custom Web IDE at <https://oolang.tech>, for experimenting in the browser.
+We have a custom Web IDE at <https://joeyh.oolang.dev>, for experimenting in the browser.
 
 `oorun`, a command line runner, is available on [crates.io](https://crates.io/crates/OOLANG), and can be installed with Cargo:
 
 ```rust
-cargo install oolang
+cargo install OOLANG
 ```
 
 OOLANG files end in `.oo`, and consist of a number of commands specified each by a single unicode glyph. Any other character is ignored. Comments are supported using the `#` character, which comments out up to the end of the line.
 
-`oorun file.oo` will execute your OOLANG program. `stdin` functionality is currently broken as of the latest release, but output will be written to `stdout`.
+`oorun file.oo` will execute your OOLANG program, reading from `stdin` and printing any output to the console. The return value is also shown.
 
 ## Language Specification
 
@@ -40,6 +40,8 @@ The virtual machine consists of a stack of bytes, and 256 bytes of addressable m
 | `◯`     | Large Circle                                 | `STORE`      | Pop the top two values from the stack, storing the 2nd value at the address specified by the 1st.  |
 | `⒪`     | Parenthesized Latin Small Letter O           | `READ`       | Read the next byte from stdin, pushing it to the top of the stack, or `0` if stdin is empty. |
 | `ₒ`     | Latin Subscript Small Letter O               | `WRITE`      | Pop from the stack and write the value to stdout as an ascii character.                       |
+
+The return value of an OOLANG program is the value at the top of the stack when the program exits.
 
 ## Architecture
 
