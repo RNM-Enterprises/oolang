@@ -1,9 +1,24 @@
 #![cfg(test)]
-use crate::execute_print;
 use crate::instruction::Instruction;
 use crate::instruction::Instruction::*;
+use crate::vm::*;
 
-use crate::vm::State;
+//executes a vm
+//used for testing
+//basically the same as crate::run
+fn execute(vm: &mut State) -> Option<u8> {
+    loop {
+        match vm.step() {
+            Ok(()) => (),
+            Err(Interrupt::End(top)) => break top,
+            Err(Interrupt::Output(c)) => println!("{c}"),
+            Err(Interrupt::StackUnderflow) => panic!("Stack underflow, aborting."),
+            Err(Interrupt::OutOfBounds(i)) => {
+                panic!("Attempted to read instruction out of bounds (index {}, max program length {}) , aborting.", i, vm.instructions_len())
+            }
+        }
+    }
+}
 
 #[test]
 fn test_empty_instructions() {
@@ -11,18 +26,18 @@ fn test_empty_instructions() {
     let instructions: Vec<Instruction> = Vec::new();
 
     let mut vm = State::init(instructions);
-    let result = execute_print(&mut vm);
+    let result = execute(&mut vm);
     assert_eq!(result, None)
 }
 
 #[test]
+#[should_panic]
 fn test_stack_underflow() {
     // tests that pop from empty stack gives underflow error
     let instructions: Vec<Instruction> = vec![Pop];
 
     let mut vm = State::init(instructions);
-    let result = execute_print(&mut vm);
-    assert_eq!(result, None)
+    execute(&mut vm);
 }
 
 #[test]
@@ -35,7 +50,7 @@ fn test_addition() {
     instructions.push(Add);
 
     let mut vm = State::init(instructions);
-    let result = execute_print(&mut vm);
+    let result = execute(&mut vm);
     assert_eq!(result, Some(15))
 }
 
@@ -73,7 +88,7 @@ fn test_multiplication() {
     instructions.push(Load);
 
     let mut vm = State::init(instructions);
-    let result = execute_print(&mut vm);
+    let result = execute(&mut vm);
     assert_eq!(result, Some(54))
 }
 
