@@ -12,19 +12,21 @@ fn main() {
         return;
     }
 
+    let input = get_input();
+    let file = std::fs::read_to_string(&cli.file).expect("Could not read file!");
     //run the program
     println!("Running OOLANG file: {}...", &cli.file);
-    let input = get_input();
+    print!("Output: ");
 
     if input.is_err() {
         println!("Could not read from stdin: {}", input.unwrap_err());
         return;
     }
 
-    if let Some(i) = oolang::run(&cli.file, input.unwrap().as_bytes()) {
-        println!("Top of stack: {}", i)
+    if let Some(i) = oolang::run(&file, input.unwrap().as_bytes()) {
+        println!("\nTop of stack: {}", i)
     } else {
-        println!("Stack empty on program exit.")
+        println!("\nStack empty on program exit.")
     }
 }
 
