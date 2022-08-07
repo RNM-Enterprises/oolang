@@ -1,9 +1,9 @@
 # OOLANG
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/RNM-Enterprises/oolang/CI/main?style=for-the-badge)([https://github.com/](https://github.com/RNM-Enterprises/oolang/actions))
-![GitHub](https://img.shields.io/github/license/RNM-Enterprises/oolang?style=for-the-badge)(./LICENSE)
-![Crates.io](https://img.shields.io/crates/d/OOLANG?style=for-the-badge)(https://crates.io/crates/OOLANG)
-![Crates.io](https://img.shields.io/crates/v/OOLANG?style=for-the-badge)(https://crates.io/crates/OOLANG)
-![Docs.rs](https://img.shields.io/docsrs/OOLANG/latest?style=for-the-badge)(https://docs.rs/OOLANG/latest/oolang/)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/RNM-Enterprises/oolang/CI/main?style=for-the-badge)](https://github.com/RNM-Enterprises/oolang/actions)
+[![GitHub](https://img.shields.io/github/license/RNM-Enterprises/oolang?style=for-the-badge)](./LICENSE)
+[![Crates.io](https://img.shields.io/crates/d/OOLANG?style=for-the-badge)](https://crates.io/crates/OOLANG)
+[![Crates.io](https://img.shields.io/crates/v/OOLANG?style=for-the-badge)](https://crates.io/crates/OOLANG)
+[![Docs.rs](https://img.shields.io/docsrs/OOLANG/latest?style=for-the-badge)](https://docs.rs/OOLANG/latest/oolang/)
 
 OOLANG is an esoteric stack-based programming language where all instructions/commands are differnet unicode O characters
 
