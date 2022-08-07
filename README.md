@@ -3,6 +3,7 @@
 ![GitHub](https://img.shields.io/github/license/RNM-Enterprises/oolang?style=for-the-badge)
 ![Crates.io](https://img.shields.io/crates/d/OOLANG?style=for-the-badge)
 ![Crates.io](https://img.shields.io/crates/v/OOLANG?style=for-the-badge)
+![Docs.rs](https://img.shields.io/docsrs/OOLANG/latest?style=for-the-badge)
 
 OOLANG is an esoteric stack-based programming language where all instructions/commands are differnet unicode O characters
 
