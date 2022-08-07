@@ -18,7 +18,7 @@ pub fn run(program: &str, input: &[u8]) -> Option<u8> {
         match vm.step() {
             Ok(()) => (),
             Err(vm::Interrupt::End(top)) => break top,
-            Err(vm::Interrupt::Output(c)) => println!("{c}"),
+            Err(vm::Interrupt::Output(c)) => print!("{c}"),
             Err(vm::Interrupt::StackUnderflow) => panic!("Stack underflow, aborting."),
             Err(vm::Interrupt::OutOfBounds(i)) => panic!("Attempted to read instruction out of bounds (index {}, max program length {}) , aborting.", i, vm.instructions_len()),
         }

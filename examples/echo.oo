@@ -1,14 +1,7 @@
 ⒪ # read byte from stdin
-
-#if byte is zero, jump to end
-#generate end address from 1s
-OǾǾǾǾǾ # address
-Ꝍ # JZ
-
-# print byte
-ₒ
-
-# jump back to top
-OᏫ #zero
-OᏫ #zero again
- Ꝍ#JZ
+O◯ # store byte at address 1
+O◎ # load address 1
+ₒ # print
+O◎ # load address 1
+OᏫ𐍉 #if non-zero, jump to top
+  # else exit

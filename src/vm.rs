@@ -32,12 +32,14 @@ impl State {
     }
     //create a new vm with the given input to the program
     pub fn init_with_input(instructions: Vec<Instruction>, input: &[u8]) -> Option<Self> {
+        let mut input = input.to_vec();
+        input.reverse(); //input read backwards using pop
         Some(State {
             memory: [0; 256],
             stack: Vec::new(),
             pc: 0,
             instructions,
-            input: input.to_vec(),
+            input,
         })
     }
 
