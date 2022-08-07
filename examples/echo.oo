@@ -1,7 +1,10 @@
 ⒪ # read byte from stdin
 O◯ # store byte at address 1
 O◎ # load address 1
-ₒ # print
+
+OǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾǾ
+𐍉 #if non-zero, jump to end
+
 O◎ # load address 1
-OᏫ𐍉 #if non-zero, jump to top
-  # else exit
+ₒ # print 
+OᏫ𐍉 # jump to top

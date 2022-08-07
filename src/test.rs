@@ -109,3 +109,11 @@ fn parse_test_with_spaces() {
         vec![Push, Pop, Inc, Dec, Jnz, Jz, Read, Write, Add, Load, Store]
     )
 }
+
+#[test]
+fn test_io() {
+    //read and write in a loop
+    let s = "Hello, World!\n";
+    let (_, output) = crate::run_buffered("⒪ O◯ O◎ ₒ O◎ OᏫ𐍉 ", s.as_bytes());
+    assert_eq!(s, output);
+}
