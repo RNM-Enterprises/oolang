@@ -125,8 +125,13 @@ impl State {
         };
         Ok(())
     }
+
     //peek the top of the stack
     pub fn stack_top(&self) -> Option<u8> {
         self.stack.last().map(|i| i.to_owned())
+    }
+
+    pub fn instructions_len(&self) -> usize {
+        self.instructions.len()
     }
 }

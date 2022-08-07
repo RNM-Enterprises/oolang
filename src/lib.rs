@@ -1,10 +1,11 @@
 //! The OOLANG library, exporting two functions, for two different ways to run your OOLANG program.
-
 mod instruction;
 mod vm;
 
 use instruction::Instruction;
 use unicode_segmentation::UnicodeSegmentation;
+
+mod test;
 
 /// Run the program with the input given. Output is printed to `stdout`.
 /// All non-OOLANG characters in the input are ignored, along with any characters on a line after a '#' (indicating a comment).
@@ -19,7 +20,7 @@ pub fn run(program: &str, input: &[u8]) -> Option<u8> {
             Err(vm::Interrupt::End(top)) => break top,
             Err(vm::Interrupt::Output(c)) => println!("{c}"),
             Err(vm::Interrupt::StackUnderflow) => panic!("Stack underflow, aborting."),
-            Err(vm::Interrupt::OutOfBounds(i)) => panic!("Attempted to read instruction out of bounds (index {}, max program length {}) , aborting.", i, program.len()),
+            Err(vm::Interrupt::OutOfBounds(i)) => panic!("Attempted to read instruction out of bounds (index {}, max program length {}) , aborting.", i, vm.instructions_len()),
         }
     })
 }
