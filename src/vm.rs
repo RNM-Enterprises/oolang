@@ -18,6 +18,7 @@ pub struct State {
 #[derive(PartialEq, Eq, Debug)]
 pub enum Interrupt {
     StackUnderflow,
+    OutOfBounds(usize),
     End(Option<u8>),
     Output(char),
 }
@@ -27,28 +28,17 @@ impl State {
     //only really used in tests
     #[allow(unused)]
     pub fn init(instructions: Vec<Instruction>) -> Self {
-        Self::init_with_input(instructions, "").unwrap()
+        Self::init_with_input(instructions, &[]).unwrap()
     }
     //create a new vm with the given input to the program
-    pub fn init_with_input(instructions: Vec<Instruction>, input: &str) -> Option<Self> {
-        //check all the chars can convert to u8s
-        if input
-            .chars()
-            .map(|c| u8::try_from(u32::from(c)))
-            .collect::<Result<Vec<u8>, _>>()
-            .is_err()
-        {
-            None
-        } else {
-            // if we're all good then create the struct with panicking conversion
-            Some(State {
-                memory: [0; 256],
-                stack: Vec::new(),
-                pc: 0,
-                instructions,
-                input: input.chars().rev().map(|c| c as u8).collect(),
-            })
-        }
+    pub fn init_with_input(instructions: Vec<Instruction>, input: &[u8]) -> Option<Self> {
+        Some(State {
+            memory: [0; 256],
+            stack: Vec::new(),
+            pc: 0,
+            instructions,
+            input: input.to_vec(),
+        })
     }
 
     //execute a single instruction
@@ -58,7 +48,11 @@ impl State {
             return Err(Interrupt::End(self.stack_top()));
         }
 
-        match self.instructions[self.pc] {
+        match self
+            .instructions
+            .get(self.pc)
+            .ok_or(Interrupt::OutOfBounds(self.pc))?
+        {
             Instruction::Push => {
                 self.stack.push(1);
                 self.pc += 1;
