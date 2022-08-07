@@ -28,17 +28,17 @@ The virtual machine consists of a stack of bytes, and 256 bytes of addressable m
 
 | Command | Unicode Character Name                       | Command Name | Description                                                                                 |
 | ------- | -------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------- |
-| `O`     | Latin Capital Letter O                       | `PUSH`       | Push the value `1` onto the top of the stack                                                |
-| `0`     | Digit Zero                                   | `POP`        | Pop the value from the top of the stack, discarding it                                      |
-| `Ǿ`     | Latin Capital Letter O with Stroke and Acute | `INC`        | Pop the top stack value, increment it, push the result                                      |
-| `Ꮻ`     | Cherokee Letter Wi                           | `DEC`        | Pop the top stack value, decrement it, push the result                                      |
-| `⭕`    | Heavy Large Circle                           | `ADD`        | Pop the top two stack values, add them, push the result                                     |
-| `𐍉`     | Gothic Letter Othal                          | `JNZ`        | Jump to the address at the top of the stack, if the 2nd-top value is non-zero               |
-| `Ꝍ`     | Latin Capital Letter O with Loop             | `JZ`         | Jump to the address at the top of the stack, if the 2nd-top value is zero                   |
-| `◎`     | Bullseye                                     | `LOAD`       | Pop from the stack, and push the value at the memory address specified                      |
-| `◯`     | Large Circle                                 | `STORE`      | Pop the top two values from the stack, storing the 2nd at the address specified by the 1st  |
-| `⒪`     | Parenthesized Latin Small Letter O           | `READ`       | Read the next byte from stdin, pushing it to the top of the stack, or `0` if stdin is empty |
-| `ₒ`     | Latin Subscript Small Letter O               | `WRITE`      | Pop from the stack and write the value to stdout as an ascii character                       |
+| `O`     | Latin Capital Letter O                       | `PUSH`       | Push the value `1` onto the top of the stack.                                                |
+| `0`     | Digit Zero                                   | `POP`        | Pop the value from the top of the stack, discarding it.                                      |
+| `Ǿ`     | Latin Capital Letter O with Stroke and Acute | `INC`        | Increment the value on the top of the stack.                                      |
+| `Ꮻ`     | Cherokee Letter Wi                           | `DEC`        | Decrement the value on the top of the stack.                                    |
+| `⭕`    | Heavy Large Circle                           | `ADD`        | Pop the top two stack values, add them, push the result.                                     |
+| `𐍉`     | Gothic Letter Othal                          | `JNZ`        | Jump to the address at the top of the stack, if the 2nd-top value is non-zero.               |
+| `Ꝍ`     | Latin Capital Letter O with Loop             | `JZ`         | Jump to the address at the top of the stack, if the 2nd-top value is zero.                   |
+| `◎`     | Bullseye                                     | `LOAD`       | Pop a memory address from the stack, and push the value at that address.                      |
+| `◯`     | Large Circle                                 | `STORE`      | Pop the top two values from the stack, storing the 2nd value at the address specified by the 1st.  |
+| `⒪`     | Parenthesized Latin Small Letter O           | `READ`       | Read the next byte from stdin, pushing it to the top of the stack, or `0` if stdin is empty. |
+| `ₒ`     | Latin Subscript Small Letter O               | `WRITE`      | Pop from the stack and write the value to stdout as an ascii character.                       |
 
 ## Architecture
 
