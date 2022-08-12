@@ -24,9 +24,9 @@ fn main() {
     }
 
     if let Some(i) = oolang::run(&file, input.unwrap().as_bytes()) {
-        println!("\nTop of stack: {}", i)
+        println!("\nReturn value: {}", i)
     } else {
-        println!("\nStack empty on program exit.")
+        println!("\nProgram had no return value (stack empty on program exit)")
     }
 }
 
