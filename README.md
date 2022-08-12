@@ -19,11 +19,14 @@ cargo install OOLANG
 
 OOLANG files end in `.oo`, and consist of a number of commands specified each by a single unicode glyph. Any other character is ignored. Comments are supported using the `#` character, which comments out up to the end of the line.
 
-```
-oorun file.oo
-```
+`oorun file.oo` will execute your OOLANG program, reading from `stdin` and printing any output to the console. The return value is also shown. For example,
 
-Will execute your OOLANG program, reading from `stdin` and printing any output to the console. The return value is also shown.
+```
+$ echo -n "Hello, World!" | oorun echo.oo
+Running OOLANG file: echo.oo...
+Output: Hello, World!
+Return value: 13
+```
 
 ## Language Specification
 
