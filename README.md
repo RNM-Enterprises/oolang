@@ -9,8 +9,6 @@ OOLANG is an esoteric stack-based programming language where all instructions/co
 
 ## Usage
 
-We have a custom Web IDE at <https://joeyh.oolang.dev>, for experimenting in the browser.
-
 `oorun`, a command line runner, is available on [crates.io](https://crates.io/crates/OOLANG), and can be installed with Cargo:
 
 ```rust
